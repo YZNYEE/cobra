@@ -1,13 +1,17 @@
 package show
 
-import "os"
+import (
+	"cobradir/sort"
+	"os"
+)
 import "fmt"
 import "cobradir/utils"
 import "cobradir/clcolor"
 
-func Showlist(filelist []os.FileInfo) {
+func Showlist(filelist []os.FileInfo, sortmod string) {
 	//n := len(filelist)
 	fmt.Println("文件名", "||", "大小", "||", "模式", "||", "修改时间", "||", "目录？")
+	filelist = sort.SortFile(filelist, sortmod)
 	for i := range filelist {
 		file := filelist[i]
 		name := file.Name()

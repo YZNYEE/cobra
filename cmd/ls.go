@@ -19,6 +19,7 @@ var dir string
 var tree bool
 var deep *int64
 var hide bool
+var sortmod string
 
 var lsCmd = &cobra.Command{
 	Use:   "ls",
@@ -44,7 +45,7 @@ to quickly create a Cobra application.`,
 		}
 		fileInfoList, _ := ioutil.ReadDir(path)
 		fmt.Println(len(fileInfoList), tree, hide)
-		show.Showlist(fileInfoList)
+		show.Showlist(fileInfoList, sortmod)
 	},
 }
 
@@ -75,6 +76,7 @@ func init() {
 	//lsCmd.PersistentFlags().BoolVarP(&tree, "tree", "t", false, "test bool")
 	lsCmd.PersistentFlags().BoolVarP(&hide, "hide", "a", false, "test bool")
 	lsCmd.PersistentFlags().StringVarP(&dir, "dir", "d", "", "路径")
+	lsCmd.PersistentFlags().StringVarP(&sortmod, "sort", "s", "", "排序")
 	//lsCmd.Flags().StringVarP(&dir, "dir", "d", "", "指定路径")
 	lsCmd.AddCommand(treeCmd)
 	deep = treeCmd.Flags().Int64("L", 1, "test int")
