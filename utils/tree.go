@@ -12,6 +12,15 @@ type FileNode struct {
 	level int
 }
 
+func (receiver FileNode) GetchildFilist() []os.FileInfo {
+	a := make([]os.FileInfo, 0)
+	for _, v := range receiver.child {
+		a = append(a, v.GetVal())
+	}
+	return a
+
+}
+
 func ToString(file os.FileInfo) string {
 	name := file.Name()
 	size := file.Size()

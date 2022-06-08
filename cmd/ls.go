@@ -65,7 +65,7 @@ var treeCmd = &cobra.Command{Use: "tree",
 			fmt.Println("路径错误，请仔细检查:" + path)
 			fileInfoList, _ := ioutil.ReadDir(path)
 			fmt.Println(len(fileInfoList), tree, hide)
-			show.Showtree(fileInfoList, int(*deep), path, hide)
+			show.Showtree(fileInfoList, int(*deep), path, hide, sortmod)
 		}
 	}}
 

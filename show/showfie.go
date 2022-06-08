@@ -22,30 +22,32 @@ func Showlist(filelist []os.FileInfo, sortmod string) {
 		fmt.Println(i, "-->:", name, "||", size, "||", filemode, "||", time, "||", isdir)
 	}
 }
-func Showtree(filelist []os.FileInfo, upper int, dir string, hide bool) {
+func Showtree(filelist []os.FileInfo, upper int, dir string, hide bool, sortmod string) {
 	root := utils.Levelsearch(filelist, upper, dir)
-	printprefix(root, "", hide)
+	printprefix(root, "", hide, sortmod)
 
 }
-func printprefix(node utils.FileNode, prefix string, hide bool) {
+func printprefix(node utils.FileNode, prefix string, hide bool, sortmod string) {
 	//fmt.Println("prefix:", prefix)
 	//fmt.Println(node.GetVal())
 	child := node.GetChild()
+	//fmt.Println("sortmod:", sortmod)
+	childs := sort.SortFileNode(child, sortmod)
+	fmt.Println()
 	if child != nil {
 		fmt.Println("==================================================================")
-		for i := 0; i < len(child); i++ {
-			cur := child[i]
+		for i := 0; i < len(childs); i++ {
+			cur := childs[i]
 			name := cur.GetVal().Name()
 			//fmt.Println(name)
 			if name[0] == byte('.') && !hide {
-				fmt.Println("comtinue")
 				continue
 			}
 			s := utils.ShortString(cur.GetVal())
 			outs := prefix + s
 			outs = clcolor.Blue(outs)
 			fmt.Println(outs)
-			printprefix(cur, prefix+"->->", hide)
+			printprefix(cur, prefix+"->->", hide, sortmod)
 		}
 		fmt.Println("==================================================================")
 	}
